@@ -3,7 +3,7 @@ let pname = document.getElementById("productname");
 let pimage = document.getElementById("productimage");
 let pprice = document.getElementById("productprice");
 let pdesc = document.getElementById("productdesc");
-let product, newProduct;
+let product, newProduct, updateid;
 document.onload = viewproduct();
 
 function validation(id) {
@@ -12,28 +12,106 @@ function validation(id) {
         document.getElementById('idvalidate').innerHTML = "*Please input a number only!!";
     }
     else if (pname.value == null || pname.value == "") {
-        document.getElementById('namevalidate').innerText = "*Please input a product name!!";
+        document.getElementById('namevalidate').innerHTML = "*Please input a product name!!";
     }
-    else if (!validimg.exec(pimage.files[0].name)) {
-        document.getElementById('imagevalidate').innerText = "*File type is not allowed!!";
+    else if (pimage.files[0].name == "" || !validimg.exec(pimage.files[0].name)) {
+        document.getElementById('imagevalidate').innerHTML = "*File type is not allowed or image not set!!";
 
     }
     else if (isNaN(pprice.value) || pprice.value < 1) {
-        document.getElementById('pricevalidate').innerText = "*Please input a number only!!";
+        document.getElementById('pricevalidate').innerHTML = "*Please input a number only & Positive value!!";
     }
     else if (pdesc.value == null || pdesc.value == "") {
-        document.getElementById('descvalidate').innerText = "*Please input a product Description!!";
+        document.getElementById('descvalidate').innerHTML = "*Please input a product Description!!";
     }
     else {
         if (id == 'submit') {
             insertion(id)
             alert('Product added successfull!!');
+            viewproduct();
         }
-        else {
+        else if (id == 'update') {
+
+            setupdatedata(updateid);
 
         }
 
     }
+}
+
+function duplicatecheck() {
+
+    product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
+
+
+
+    product.forEach(function (element) {
+
+
+        if (element.pid == pid.value) {
+
+            document.getElementById('idvalidate').innerHTML = "*Product ID should be unique";
+
+            if (document.getElementById("submit").id == "submit") {
+
+                document.getElementById("submit").disabled = true;
+            }
+            else {
+                document.getElementById("update").disabled = true;
+            }
+
+        }
+        else {
+            document.getElementById('idvalidate').innerHTML = "";
+            if (document.getElementById("submit").id == "submit") {
+                document.getElementById("submit").disabled = false;
+            }
+            else {
+                document.getElementById("update").disabled = false;
+            }
+
+
+        }
+
+
+
+    })
+
+}
+function duplicatecheck1() {
+
+    product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
+
+
+
+    product.forEach(function (element) {
+
+        if (element.pname == pname.value) {
+            document.getElementById('namevalidate').innerHTML = "*Product name should be unique";
+            if (document.getElementById("submit").id == "submit") {
+                document.getElementById("submit").disabled = true;
+            }
+            else {
+                document.getElementById("update").disabled = true;
+            }
+
+        }
+        else {
+            document.getElementById('namevalidate').innerHTML = "";
+            if (document.getElementById("submit").id == "submit") {
+                document.getElementById("submit").disabled = false;
+            }
+            else {
+                document.getElementById("update").disabled = false;
+            }
+
+
+        }
+
+
+
+    })
+
 }
 function insertion(id) {
 
@@ -64,9 +142,47 @@ function viewproduct() {
                     <td><img src="images\\${element.pimage}" width="160px" height="128px"/></td>
                     <td>${element.pprice} </td>
                     <td>${element.pdesc}</td>
-                    <td><button class='btn btn-primary' onclick='productUpdate(this.id)' id='${i}'>Edit</button> <button class='btn btn-danger' onclick='productDelete(this.id)' id='${i}'>Delete</button></td>
+                    <td><button class='btn btn-primary' onclick='Update(this.id)' id='${i}'>Edit</button> <button class='btn btn-danger' onclick='productDelete(this.id)' id='${i}'>Delete</button></td>
                   </tr>`;
     });
     document.getElementById("seeproducts").innerHTML = table;
 
+}
+function productDelete(id) {
+    product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
+    if (id) {
+        if (confirm("You want to delete your data!")) {
+            product.splice(id, 1);
+            localStorage.setItem("productDetail", JSON.stringify(product));
+        }
+    }
+    viewproduct();
+}
+function Update(id) {
+    if (id) {
+        document.getElementById("submit").id = "update";
+        pid.value = product[id].pid;
+        pname.value = product[id].pname;
+        //document.getElementById("productimage").files[0].name=product[id].pimage;
+        pprice.value = Number(product[id].pprice);
+        pdesc.value = product[id].pdesc;
+        updateid = id;
+    }
+
+}
+function setupdatedata(id) {
+    if (id) {
+        product[id].pid = pid.value;
+        product[id].pname = pname.value;
+        product[id].pimage = pimage.files[0].name;
+        product[id].pprice = pprice.value;
+        //product[id].pprice=document.getElementById("productprice").value;
+        product[id].pdesc = pdesc.value;
+        localStorage.setItem('productDetail', JSON.stringify(product));
+        //document.getElementById("myForm").reset();
+        //document.getElementById("productid").value="";
+        document.getElementById("update").id = "submit";
+        viewproduct();
+
+    }
 }

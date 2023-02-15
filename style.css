@@ -3,6 +3,13 @@
     text-align: center;
 }
 .form-text{
-    color: red;
-    font-size: medium;
+    color: #b60000;
+    font-size: large;
+}
+body{
+    background: #839d5edd;
+    font-size: x-large;
+}
+table{
+    font-weight: 500;
 }
