@@ -132,9 +132,9 @@ function insertion(id) {
 
     }
 }
-function viewproduct() {
+function viewproduct(id) {
     let table = "";
-    product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
+    product = (id) ? id : JSON.parse(localStorage.getItem("productDetail")) ?? [];
     product.forEach(function (element, i) {
         table += `<tr>
                     <td>${element.pid}</td>
@@ -185,4 +185,11 @@ function setupdatedata(id) {
         viewproduct();
 
     }
+}
+function findproduct(id) {
+    let searchid = document.getElementById("searchproduct").value;
+    product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
+    let findid = product.filter((productSearch) => productSearch['id'].includes(searchid));
+
+    viewproduct(findid);
 }

@@ -53,6 +53,23 @@
     </form>
 
     <hr>
+    <hr>
+    <form>
+      <table class="table tbl-width">
+        <tr>
+          <td>
+            <div class="mb-3">
+              <input type="text" class="form-control" id="searchproduct" aria-describedby="proidvalidate" required placeholder="Search By ID">
+              <div id="proidvalidate" class="form-text"></div>
+            </div>
+          </td>
+          <td>
+            <button type="submit" class="btn btn-primary" id="search" onclick="findproduct(this.id)">Search</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+    
     <table class="table table-striped" id="seedata">
       <thead>
         <tr>

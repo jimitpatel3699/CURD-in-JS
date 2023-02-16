@@ -13,3 +13,7 @@ body{
 table{
     font-weight: 500;
 }
+.tbl-width
+{
+    width: 30%;
+}
