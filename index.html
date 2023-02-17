@@ -23,7 +23,7 @@
     <form id="myForm" action="#">
       <div class="mb-3">
         <label for="productid" class="form-label">Product ID:</label>
-        <input type="text" onchange="duplicatecheck()" class="form-control" id="productid"  aria-describedby="idvalidate" required >
+        <input type="text" onchange="duplicatecheck1()" class="form-control" id="productid"  aria-describedby="idvalidate" required >
         <div id="idvalidate" class="form-text"></div>
       </div>
       <div class="mb-3">
@@ -55,7 +55,7 @@
     <hr>
     <hr>
     <form>
-      <table class="table tbl-width">
+      <table class="table tbl-width" id="searchtable">
         <tr>
           <td>
             <div class="mb-3">
@@ -64,19 +64,22 @@
             </div>
           </td>
           <td>
-            <button type="submit" class="btn btn-primary" id="search" onclick="findproduct(this.id)">Search</button>
+            <button type="button" class="btn btn-primary" id="search" onclick="findproduct(this.id)">Search</button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" id="clear" onclick="findproduct(this.id)">Clear</button>
           </td>
         </tr>
       </table>
     </form>
-    
+    <button type="button" class="btn btn-primary" id="" onclick="viewproduct()">clearFilter</button>
     <table class="table table-striped" id="seedata">
       <thead>
         <tr>
-          <th scope="col">#Pid</th>
-          <th scope="col">Product Name</th>
+          <th scope="col" id="sortid" onclick="sortdata(this.id)">#Pid</th>
+          <th scope="col" id="sortname" onclick="sortdata(this.id)">#Product Name</th>
           <th scope="col">Product Image</th>
-          <th scope="col">Price</th>
+          <th scope="col" id="sortprice" onclick="sortdata(this.id)">#Price</th>
           <th scope="col">Description</th>
           <th scope="col">Action</th>
         </tr>
