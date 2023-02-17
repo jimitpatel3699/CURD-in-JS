@@ -7,7 +7,7 @@ let product, newProduct, updateid;
 document.onload = viewproduct();
 
 function validation(id) {
-    console.log(pimage.files[0].name);
+    console.log(pimage.files[0]);
     let validimg = /(\.jpg|\.jpeg|\.png|\.jfif|\.gif)$/i;
     if (isNaN(pid.value) || pid.value < 1) {
         document.getElementById('idvalidate').innerHTML = "*Please input a number only!!";
@@ -15,7 +15,7 @@ function validation(id) {
     else if (pname.value == null || pname.value == "") {
         document.getElementById('namevalidate').innerHTML = "*Please input a product name!!";
     }
-    else if (pimage.files[0].name == null || !validimg.exec(pimage.files[0].name)) {
+    else if (pimage.files[0] == null || !validimg.exec(pimage.files[0].name)) {
         document.getElementById('imagevalidate').innerHTML = "*File type is not allowed or image not set!!";
 
     }
@@ -29,17 +29,27 @@ function validation(id) {
         if (id == 'submit') {
             insertion(id)
             alert('Product added successfull!!');
+            reseterror();
             viewproduct();
         }
         else if (id == 'update') {
 
             setupdatedata(updateid);
+            reseterror();
+            location.reload();
 
         }
 
     }
 }
-
+function reseterror()
+{
+    document.getElementById('descvalidate').innerHTML = "";
+    document.getElementById('pricevalidate').innerHTML = "";
+    document.getElementById('imagevalidate').innerHTML = "";
+    document.getElementById('namevalidate').innerHTML = "";
+    document.getElementById('idvalidate').innerHTML = "";
+}
 // function duplicatecheck() {
 
 //     product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
@@ -92,10 +102,10 @@ function duplicatecheck1() {
     console.log("pname" + findname.length);
     console.log("pid" + findid.length);
     if (findname.length > 0 || findid.length > 0) {
-        if (findname.length > 0) {
+        if (findname.length > 0 && duplicatename != "") {
             document.getElementById('namevalidate').innerHTML = "*Product name should be unique";
         }
-        if (findid.length > 0) {
+        if (findid.length > 0 && duplicateid != "") {
             document.getElementById('idvalidate').innerHTML = "*Product ID should be unique";
         }
         if (document.getElementById("submit").id == "submit") {
@@ -171,12 +181,19 @@ function viewproduct(id) {
     let table = "";
 
     console.log(id);
-    if (id == 1234) {
-        product =JSON.parse(localStorage.getItem("productDetailsort")) ?? [];
-        console.log(1);
+    if(id)
+    {
+        if (id == 1234) {
+            product = JSON.parse(localStorage.getItem("productDetailsort")) ?? [];
+            console.log(1);
+        }
+        else{
+            product=id;
+        }
     }
+    
     else {
-        product =JSON.parse(localStorage.getItem("productDetail")) ?? [];
+        product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
         console.log(0);
     }
 
@@ -244,7 +261,7 @@ function findproduct(id) {
             document.getElementById("proidvalidate").innerHTML = '';
         }
         else if (findid.length == 0) {
-            viewproduct(findid);
+            // viewproduct(findid);
             document.getElementById("proidvalidate").innerHTML = 'Product Data Not Availbale or ID not Exists';
         }
 
@@ -269,7 +286,7 @@ function sortdata(id) {
 
     }
     localStorage.setItem('productDetailsort', JSON.stringify(data));
-    let cid=1234;
+    let cid = 1234;
     viewproduct(cid);
 
 }
