@@ -90,7 +90,7 @@ function duplicatecheck1() {
     let duplicatename = document.getElementById("productname").value;
     let duplicateid = document.getElementById("productid").value;
 
-    product = JSON.parse(localStorage.getItem("productDetail")) ? ? [];
+    product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
     // let findid = product.filter((productSearch) => productSearch['pid'].toLowerCase().includes(searchid.toLowerCase()));
     let findname = product.filter((productSearch) => productSearch['pname'].includes(duplicatename));
     let findid = product.filter((productSearch) => productSearch['pid'].includes(duplicateid));
@@ -165,7 +165,7 @@ function insertion(id) {
             "pdesc": pdesc.value
         };
         //alert(newProduct);
-        product = JSON.parse(localStorage.getItem('productDetail')) ? ? [];
+        product = JSON.parse(localStorage.getItem('productDetail')) ?? [];
         product.push(newProduct);
         //alert(product);
         localStorage.setItem('productDetail', JSON.stringify(product));
@@ -179,13 +179,13 @@ function viewproduct(id) {
     console.log(id);
     if (id) {
         if (id == 1234) {
-            product = JSON.parse(localStorage.getItem("productDetailsort")) ? ? [];
+            product = JSON.parse(localStorage.getItem("productDetailsort")) ?? [];
             console.log(1);
         } else {
             product = id;
         }
     } else {
-        product = JSON.parse(localStorage.getItem("productDetail")) ? ? [];
+        product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
         console.log(0);
     }
 
@@ -204,7 +204,7 @@ function viewproduct(id) {
 }
 
 function productDelete(id) {
-    product = JSON.parse(localStorage.getItem("productDetail")) ? ? [];
+    product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
     if (id) {
         if (confirm("You want to delete your data!")) {
             product.splice(id, 1);
@@ -247,7 +247,7 @@ function setupdatedata(id) {
 function findproduct(id) {
     if (id == "search") {
         let searchid = document.getElementById("searchproduct").value;
-        product = JSON.parse(localStorage.getItem("productDetail")) ? ? [];
+        product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
         // let findid = product.filter((productSearch) => productSearch['pid'].toLowerCase().includes(searchid.toLowerCase()));
         let findid = product.filter((productSearch) => productSearch['pid'].includes(searchid));
         //productSearch['id'].toLowerCase().includes(searchData.toLowerCase()));
