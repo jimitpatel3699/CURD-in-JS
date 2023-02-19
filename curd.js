@@ -11,28 +11,24 @@ function validation(id) {
     let validimg = /(\.jpg|\.jpeg|\.png|\.jfif|\.gif)$/i;
     if (isNaN(pid.value) || pid.value < 1) {
         document.getElementById('idvalidate').innerHTML = "*Please input a number only!!";
-    }
-    else if (pname.value == null || pname.value == "") {
+    } else if (pname.value == null || pname.value == "") {
         document.getElementById('namevalidate').innerHTML = "*Please input a product name!!";
-    }
-    else if (pimage.files[0] == null || !validimg.exec(pimage.files[0].name)) {
+    } else if (pimage.files[0] == null || !validimg.exec(pimage.files[0].name)) {
         document.getElementById('imagevalidate').innerHTML = "*File type is not allowed or image not set!!";
 
-    }
-    else if (isNaN(pprice.value) || pprice.value < 1) {
+    } else if (isNaN(pprice.value) || pprice.value < 1) {
         document.getElementById('pricevalidate').innerHTML = "*Please input a number only & Positive value!!";
-    }
-    else if (pdesc.value == null || pdesc.value == "") {
+    } else if (pdesc.value == null || pdesc.value == "") {
         document.getElementById('descvalidate').innerHTML = "*Please input a product Description!!";
-    }
-    else {
+    } else {
         if (id == 'submit') {
             insertion(id)
-            alert('Product added successfull!!');
+                //alert('Product added successfull!!');
             reseterror();
             viewproduct();
-        }
-        else if (id == 'update') {
+            location.reload();
+
+        } else if (id == 'update') {
 
             setupdatedata(updateid);
             reseterror();
@@ -42,8 +38,8 @@ function validation(id) {
 
     }
 }
-function reseterror()
-{
+
+function reseterror() {
     document.getElementById('descvalidate').innerHTML = "";
     document.getElementById('pricevalidate').innerHTML = "";
     document.getElementById('imagevalidate').innerHTML = "";
@@ -94,7 +90,7 @@ function duplicatecheck1() {
     let duplicatename = document.getElementById("productname").value;
     let duplicateid = document.getElementById("productid").value;
 
-    product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
+    product = JSON.parse(localStorage.getItem("productDetail")) ? ? [];
     // let findid = product.filter((productSearch) => productSearch['pid'].toLowerCase().includes(searchid.toLowerCase()));
     let findname = product.filter((productSearch) => productSearch['pname'].includes(duplicatename));
     let findid = product.filter((productSearch) => productSearch['pid'].includes(duplicateid));
@@ -110,8 +106,7 @@ function duplicatecheck1() {
         }
         if (document.getElementById("submit").id == "submit") {
             document.getElementById("submit").disabled = true;
-        }
-        else {
+        } else {
             document.getElementById("update").disabled = true;
         }
     }
@@ -121,8 +116,7 @@ function duplicatecheck1() {
 
         if (document.getElementById("submit").id == "submit") {
             document.getElementById("submit").disabled = false;
-        }
-        else {
+        } else {
             document.getElementById("update").disabled = false;
         }
     }
@@ -158,6 +152,7 @@ function duplicatecheck1() {
     // })
 
 }
+
 function insertion(id) {
 
     if (id == "submit") {
@@ -170,34 +165,31 @@ function insertion(id) {
             "pdesc": pdesc.value
         };
         //alert(newProduct);
-        product = JSON.parse(localStorage.getItem('productDetail')) ?? [];
+        product = JSON.parse(localStorage.getItem('productDetail')) ? ? [];
         product.push(newProduct);
         //alert(product);
         localStorage.setItem('productDetail', JSON.stringify(product));
 
     }
 }
+
 function viewproduct(id) {
     let table = "";
 
     console.log(id);
-    if(id)
-    {
+    if (id) {
         if (id == 1234) {
-            product = JSON.parse(localStorage.getItem("productDetailsort")) ?? [];
+            product = JSON.parse(localStorage.getItem("productDetailsort")) ? ? [];
             console.log(1);
+        } else {
+            product = id;
         }
-        else{
-            product=id;
-        }
-    }
-    
-    else {
-        product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
+    } else {
+        product = JSON.parse(localStorage.getItem("productDetail")) ? ? [];
         console.log(0);
     }
 
-    product.forEach(function (element, i) {
+    product.forEach(function(element, i) {
         table += `<tr>
                     <td>${element.pid}</td>
                     <td>${element.pname}</td>
@@ -210,8 +202,9 @@ function viewproduct(id) {
     document.getElementById("seeproducts").innerHTML = table;
 
 }
+
 function productDelete(id) {
-    product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
+    product = JSON.parse(localStorage.getItem("productDetail")) ? ? [];
     if (id) {
         if (confirm("You want to delete your data!")) {
             product.splice(id, 1);
@@ -220,6 +213,7 @@ function productDelete(id) {
     }
     viewproduct();
 }
+
 function Update(id) {
     if (id) {
         document.getElementById("submit").id = "update";
@@ -232,6 +226,7 @@ function Update(id) {
     }
 
 }
+
 function setupdatedata(id) {
     if (id) {
         product[id].pid = pid.value;
@@ -248,10 +243,11 @@ function setupdatedata(id) {
 
     }
 }
+
 function findproduct(id) {
     if (id == "search") {
         let searchid = document.getElementById("searchproduct").value;
-        product = JSON.parse(localStorage.getItem("productDetail")) ?? [];
+        product = JSON.parse(localStorage.getItem("productDetail")) ? ? [];
         // let findid = product.filter((productSearch) => productSearch['pid'].toLowerCase().includes(searchid.toLowerCase()));
         let findid = product.filter((productSearch) => productSearch['pid'].includes(searchid));
         //productSearch['id'].toLowerCase().includes(searchData.toLowerCase()));
@@ -259,25 +255,23 @@ function findproduct(id) {
         if (findid.length > 0) {
             viewproduct(findid);
             document.getElementById("proidvalidate").innerHTML = '';
-        }
-        else if (findid.length == 0) {
+        } else if (findid.length == 0) {
             // viewproduct(findid);
             document.getElementById("proidvalidate").innerHTML = 'Product Data Not Availbale or ID not Exists';
         }
 
-    }
-    else if (id == "clear") {
+    } else if (id == "clear") {
         location.reload();
     }
 
 }
+
 function sortdata(id) {
     let data = JSON.parse(localStorage["productDetail"]);
     if (id == "sortid") {
         data.sort((a, b) => { return a.pid - b.pid; });
 
-    }
-    else if (id == "sortname") {
+    } else if (id == "sortname") {
 
         data.sort((a, b) => { return a.pname.toString().localeCompare(b.pname.toString()); });
 
