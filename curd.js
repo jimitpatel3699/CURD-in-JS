@@ -204,7 +204,7 @@ function viewproduct(id) {
     }
     else {
         table += `<tr>
-    <td colspan='6' class='text-center text-warning'>${"No Product Available Yet!"}</td>
+    <td colspan='6' class='text-center text-warning'>${"No product available yet!"}</td>
          </tr> `;
 
     }
