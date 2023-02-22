@@ -1,0 +1,24 @@
+.heading{
+    text-decoration: underline;
+    text-align: center;
+}
+.form-text{
+    color: #b60000;
+    font-size: large;
+}
+body{
+    background: #839d5edd;
+    font-size: x-large;
+}
+table{
+    font-weight: 500;
+}
+.tbl-width
+{
+    width: 30%;
+}
+.disp-img{
+    display: none;
+    width: 5em;
+    
+}
