@@ -22,20 +22,23 @@
         <form id="myForm" action="#">
             <div class="mb-3">
                 <label for="productid" class="form-label">Product ID:</label>
-                <input type="text" onchange="duplicatecheck1()" class="form-control" id="productid" aria-describedby="idvalidate" required>
+                <input type="text" onchange="duplicatecheckid()" class="form-control" id="productid" aria-describedby="idvalidate" required>
                 <div id="idvalidate" class="form-text"></div>
             </div>
             <div class="mb-3">
                 <label for="productname" class="form-label">Product Name:</label>
-                <input type="text" onchange="duplicatecheck1()" class="form-control" id="productname" aria-describedby="namevalidate" required>
+                <input type="text" onchange="duplicatecheckname()" class="form-control" id="productname" aria-describedby="namevalidate" required>
                 <div id="namevalidate" class="form-text"></div>
             </div>
 
             <div class="mb-3">
                 <label for="productimage" class="form-label">Product Image:</label>
-                <input type="file" class="form-control" id="productimage" aria-describedby="imagevalidate" required>
+                <input type="file" class="form-control" id="productimage" aria-describedby="imagevalidate" onchange="setimage()" required>
                 <div id="imagevalidate" class="form-text"></div>
             </div>
+            <div class="mb-3">
+              <img class="disp-img" src="" id="displayimg">
+          </div>
             <div class="mb-3">
                 <label for="productprice" class="form-label">Product Price:</label>
                 <input type="number" class="form-control" id="productprice" aria-describedby="pricevalidate" required>
@@ -46,7 +49,7 @@
                 <textarea class="form-control" id="productdesc" placeholder="Add Description" aria-describedby="descvalidate" required></textarea>
                 <div id="descvalidate" class="form-text"></div>
             </div>
-            <button type="button" class="btn btn-primary" id="submit" onclick="validation(this.id)">Add/Update</button>
+            <button type="button" class="btn btn-primary" id="submit" onclick="validation(this.id)">Add</button>
             <button type="reset" class="btn btn-primary" id="reset" onclick="reseterror()">Reset</button>
         </form>
 
@@ -74,7 +77,7 @@
         <table class="table table-striped" id="seedata">
             <thead>
                 <tr>
-                    <th scope="col" id="sortid" onclick="sortdata(this.id)">#Pid</th>
+                    <th scope="col" id="sortid" onclick="sortdata(this.id)">#Product Id</th>
                     <th scope="col" id="sortname" onclick="sortdata(this.id)">#Product Name</th>
                     <th scope="col">Product Image</th>
                     <th scope="col" id="sortprice" onclick="sortdata(this.id)">#Price</th>
